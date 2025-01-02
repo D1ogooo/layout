@@ -1,5 +1,5 @@
 import { SetStateAction, useState, useRef } from "react";
-import { HeaderStyle, SelectStyled } from "./style.ts";
+import { HeaderStyle, SelectStyled, ButtonsPay } from "./style.ts";
 import { BiSolidUser } from "react-icons/bi";
 import menu from "../../assets/menu.png";
 import logoBlaze from "../../assets/logoBlaze.png";
@@ -23,8 +23,10 @@ import SairIcon from '../../assets/sairIcon.svg'
 import UserIcon from '../../assets/usericon.svg'
 import { Menu, MenuButton, MenuList, MenuItem, IconButton, Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Box, Img, useDisclosure, ModalCloseButton, background } from "@chakra-ui/react";
 import { AddIcon, ExternalLinkIcon, RepeatIcon, EditIcon } from "@chakra-ui/icons";
+import { useHeader } from "../../context/headerContext"
 
-export function Header({ onQuantiaChange }: { onQuantiaChange: (value: number) => void }) {
+export function Header({ onQuantiaChange , switchSacar }: { onQuantiaChange: (value: number) => void }) {
+  const { quantia, setQuantia } = useHeader()
   const [initialQuantia, setInitialQuantia] = useState(1);
   const [selectedPositions, setSelectedPositions] = useState<string[]>([]);
   const { isOpen, onOpen, onClose } = useDisclosure(); 
@@ -37,8 +39,8 @@ export function Header({ onQuantiaChange }: { onQuantiaChange: (value: number) =
   const handleQuantiaChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let value = e.target.value;
     value = value.replace("R$", "").replace(",", ".");
-    const numericValue = parseFloat(value);
-    if (!isNaN(numericValue)) {
+    const numericValue = Number.parseFloat(value);
+    if (!Number.isNaN(numericValue)) {
       setInitialQuantia(numericValue);
       onQuantiaChange(numericValue); 
     }
@@ -48,9 +50,8 @@ export function Header({ onQuantiaChange }: { onQuantiaChange: (value: number) =
     setSelectedPositions((prevSelectedPositions) => {
       if (prevSelectedPositions.includes(position)) {
         return prevSelectedPositions.filter((pos) => pos !== position);
-      } else {
-        return [...prevSelectedPositions, position];
       }
+        return [...prevSelectedPositions, position];
     });
   };
 
@@ -88,47 +89,49 @@ export function Header({ onQuantiaChange }: { onQuantiaChange: (value: number) =
               
               <Menu placement="bottom"> 
                 <MenuButton
+                  style={{ border: "none", marginLeft:"10px"}}
                   as={IconButton}
                   aria-label="Options"
-                  icon={<img src={UserIcon} alt="User" />}
+                  icon={<img src={"https://blaze.com/static/media/profile-icon.b5349171.svg"} alt="User" />}
                   variant="outline"
+                  _hover={false}
                 />
                 <MenuList>
-                  <MenuItem icon={<img src={UserIcon}/>} >
+                  <MenuItem icon={<img src={UserIcon} alt=""/>} >
                     Conta
                   </MenuItem>
-                  <MenuItem icon={<img src={dinheiroIcon} />} >
+                  <MenuItem icon={<img src={dinheiroIcon} alt=""/>} >
                     Meu Saldo
                   </MenuItem>
-                  <MenuItem icon={<img src={depositarIcon} />} onClick={onOpen}>
+                  <MenuItem icon={<img src={depositarIcon} alt=""/>} onClick={onOpen}>
                     Depositar
                   </MenuItem>
-                  <MenuItem icon={<img src={sacarIcon} />} >
+                  <MenuItem icon={<img src={sacarIcon} alt=""/>} onClick={switchSacar}>
                     Sacar
                   </MenuItem>
-                  <MenuItem icon={<img src={IndiqueIcon} />} >
+                  <MenuItem icon={<img src={IndiqueIcon} alt=""/>} >
                     Indique Um Amigo
                   </MenuItem>
-                  <MenuItem icon={<img src={TransacaoIcon} />} >
+                  <MenuItem icon={<img src={TransacaoIcon} alt=""/>} >
                     Transações
                   </MenuItem>
-                  <MenuItem icon={<img src={HistoricoIcon} />} >
+                  <MenuItem icon={<img src={HistoricoIcon} alt=""/>} >
                     Histórico
                   </MenuItem>
-                  <MenuItem icon={<img src={PreferenciasIcon} />} >
+                  <MenuItem icon={<img src={PreferenciasIcon} alt=""/>} >
                     Preferências
                   </MenuItem>
-                  <MenuItem icon={<img src={JusticaIcon} />} >
+                  <MenuItem icon={<img src={JusticaIcon} alt=""/>} >
                     Justiça
                   </MenuItem>
-                  <MenuItem icon={<img src={SuporteIcon} />} >
+                  <MenuItem icon={<img src={SuporteIcon} alt=""/>} >
                     Suporte ao Vivo
                   </MenuItem>
-                  <MenuItem icon={<img src={RecompensasIcon} />} >
+                  <MenuItem icon={<img src={RecompensasIcon} alt=""/>} >
                     Recompensas
                   </MenuItem>
                   <hr />
-                  <MenuItem icon={<img src={SairIcon} />} >
+                  <MenuItem icon={<img src={SairIcon} alt=""/>} >
                     Sair
                   </MenuItem>
                 </MenuList>
@@ -137,8 +140,8 @@ export function Header({ onQuantiaChange }: { onQuantiaChange: (value: number) =
               <label>
                 <input
                   type="text"
-                  value={formatValue(initialQuantia)}
-                  onChange={handleQuantiaChange}
+                  // value={formatValue(initialQuantia)}
+                  onChange={(e) => setQuantia(e.target.value)}
                   className="value_input"
                 />
               </label>

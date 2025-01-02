@@ -100,7 +100,7 @@ export const ButtonsPay = styled.button`
   padding: 5px;
   font-size: 12px;
   width: 100%;
-  height: 40px; */
+  height: 40px; 
  }
 `
 
