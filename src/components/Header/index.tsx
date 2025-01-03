@@ -96,8 +96,11 @@ export function Header({ onQuantiaChange , switchSacar }: { onQuantiaChange: (va
                <p style={{ color: "#C5A075" }}>Bronze</p>
                <p style={{ color: "#fff", fontFamily: "Roboto", fontSize: "14px", marginTop: "3px" }}>Nível29</p>
               </div>
-              <div style={{ width: "80px", height: "2px", background: "#353e4c" }}/>
-              <div style={{ position: "absolute", background: "#C5A075", margin }}/>
+              <div style={{ width: "80px", height: "4px", zIndex: "9999", background: "#C5A075", borderRadius: "5px" }}/>
+              <div style={{ position: "absolute", width: "80px", height: "4px", borderRadius: "5px", 
+                background: "#353e4c", marginLeft: "46px",
+                marginTop: '24px'
+                }}/>
             </Level>
             <div className="flex items-center">
               <img src={NotificationIcon} alt="" className="message_icon" />

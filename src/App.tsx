@@ -19,6 +19,7 @@ import {
   Form,
   Section,
   ModalStyleRetirada,
+  PulsarOnline,
 } from "./style";
 import { Toast } from './components/toast'
 import { ImVolumeHigh } from "react-icons/im";
@@ -86,10 +87,10 @@ function App() {
     }));
 
     if (isDiamond) {
-      setModalCongratulations(true)
-      setTimeout(() => {
-        setModalCongratulations(false)
-      }, 2000)
+      // setModalCongratulations(true)
+      // setTimeout(() => {
+      //   setModalCongratulations(false)
+      // }, 2000)
       setQuantia((prevQuantia: number) => prevQuantia + 0.112);
       setCurrentMultiplier((prevMultiplier) => prevMultiplier * 4.667);
       setNextMultiplier(currentMultiplier * 4.667);
@@ -150,7 +151,7 @@ function App() {
   }
 
 
-  function handleSwitchToast () {
+  function handleSwitchToast() {
     setStateToast(!stateToast)
   }
 
@@ -166,13 +167,14 @@ function App() {
           <Card
             className={isFlipped ? "flipped" : ""}
             onClick={() => handleCardClick(index)}
+            style={{ marginBottom: '30px' }} // Adiciona margem de 30px abaixo do Card
           >
             <CardFront>
               <div />
             </CardFront>
             <CardBack
               style={{
-                backgroundColor: isDiamond ? "transparent" : "#E2254C",
+                backgroundColor: isDiamond ? "#202a33" : "#E2254C",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
@@ -504,11 +506,15 @@ function App() {
             <div>
               {renderCards()}
             </div>
+            <PulsarOnline style={{ marginLeft: "33.125rem", marginTop: "-3.125rem", display: 'flex'}}>
+              <div />
+              <p>Online</p>
+            </PulsarOnline>
           </Right>
         </ContentFirst>
       </Main>
 
-      {stateToast && <Toast handleSwitchToast={handleSwitchToast}/>}
+      {stateToast && <Toast handleSwitchToast={handleSwitchToast} />}
 
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />

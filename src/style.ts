@@ -9,15 +9,16 @@ export const Main = styled.main`
   justify-content: center;
   height: calc(100vh - 30vh);
   /* width: 70%; */
-  `;
+`;
 
 export const ContentFirst = styled.div`
   border-radius: .3125rem;
   background-image: url("../assets/background-game.602c4786.svg") no-repeat center center;
   background-size: cover;
   
-  width: 1440px;
-  height: 536px;
+  width: 1500px;
+  height: 690px;
+  /* flex-direction: column; */
   display: flex;
   color: #fff;
   margin: 0 auto;
@@ -49,12 +50,14 @@ export const Left = styled.section`
 `;
 
 export const Right = styled.section`
-  /* width: 667.2px; */
-  display: flex;
+  width: 667.2px;
+  /* display: flex; */
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   border-radius: .3125rem;
-  width: 675px;
+  width: 720px;
+  height: auto;
   /* width: 100%; */
   padding-top: 9.6px;
   padding-left: 84.8px;
@@ -65,11 +68,16 @@ export const Right = styled.section`
   background-color: #1a242db2;
 
   div {
-    display: flex;
-    flex-wrap: wrap;
-    margin: 1.6px;
-    gap: 0;
-  }
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+  /* margin: 0.2rem; */
+
+  margin-left: .2rem;
+  margin-right: .2rem;
+  margin-bottom: 30px; 
+  margin-top: 1px; 
+}
 `;
 
 export const Internal = styled.section`
@@ -236,15 +244,18 @@ export const Mid = styled.div`
 `;
 
 export const CardWrapper = styled.div`
-  padding: 0;  
-  width: 100px; 
+  padding: 0;
+  width: 100px;
   height: 100px;
   perspective: 62.5rem;
   margin: 0;  
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1;  
+  /* display: flex; */
+  /* justify-content: center; */
+  /* align-items: center; */
+  /* z-index: 1; */
+
+  /* Adicionando 30px;
+  /* margin-bottom: 30px; */
 `;
 
 export const Card = styled.div`
@@ -267,7 +278,8 @@ export const Card = styled.div`
 
 export const CardFront = styled.div`
   border-radius: 12px;
-  position: absolute;
+  position: absolute;  margin: 12px;
+  padding: 12px;
   width: 100%;
   height: 100%;
   backface-visibility: hidden;
@@ -291,11 +303,11 @@ export const CardBack = styled.div`
   }
 
   .bomb-background {
-  background-color: #E2254C; 
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+   background-color: #E2254C; 
+   display: flex;
+   align-items: center;
+   justify-content: center;
+  }
 `;
 
 export const Retirar = styled(Comecar)``;
@@ -604,3 +616,37 @@ export const Section = styled.div`
   border-bottom: .5px solid transparent;
   border-left: 5px solid #F12C4C;
 `;
+
+export const PulsarOnline = styled.div`
+ display: flex;
+ font-family: "Inter";
+ position: relative;
+ right: 0;
+ /* align-items: center; */
+ 
+ div {
+    color: #06E385;
+    width: 11px;
+    height: 11px;
+    background-color: #06e385; 
+    border-radius: 50%; 
+    margin-right: 10px; 
+    margin-top: 7px;
+    animation: pulsate 1.5s infinite; 
+  }
+
+  @keyframes pulsate {
+    0% {
+      transform: scale(1); /* Tamanho original */
+      background-color: #4CAF50; /* Cor verde */
+    }
+    50% {
+      transform: scale(1.3); /* Aumenta o tamanho */
+      background-color: #66bb6a; /* Cor mais clara */
+    }
+    100% {
+      transform: scale(1); /* Retorna ao tamanho original */
+      background-color: #4CAF50; /* Cor verde */
+    }
+  }
+`
