@@ -435,7 +435,8 @@ export const Form = styled.form`
   }
   
   #section_button {
-   margin-top: 3.6rem;
+   margin-top: 8rem;
+   
   }
 
   
@@ -492,11 +493,29 @@ export const ModalStyleSacar = styled.div`
   z-index: 9999; 
 
   div:nth-child(1) {
+    .CloseIcon {
+    width: 3.125rem;
+    height: 1.875rem;
+    position: absolute;
+    margin-top: .1875rem;
+    right: 0;
+    top: 0;
+  }
     display: flex;
     gap: .7rem;
     margin: 0 auto;
     margin-bottom: 1rem;
     align-items: center;
+    button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      margin: 5px;
+      img {
+        width: 50px; 
+        height: 50px; 
+      }
+    }
   }
 `;
 

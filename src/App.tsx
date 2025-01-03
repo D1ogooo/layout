@@ -20,6 +20,7 @@ import {
   Section,
   ModalStyleRetirada,
 } from "./style";
+import { Toast } from './components/toast'
 import { ImVolumeHigh } from "react-icons/im";
 import { FaHistory } from "react-icons/fa";
 import { IoIosClose } from "react-icons/io";
@@ -29,6 +30,7 @@ import GraficIcon from "./assets/grafic.svg";
 import BombImage from "./assets/bomb.fd702b50.svg";
 import DiamondImage from "./assets/diamond.eac6e969.svg";
 import BackgroundImage from "./assets/background-game.602c4786.svg";
+import CorrectIcon from './assets/17766985.png'
 import CompacIcon from './assets/compact.svg'
 import { useDisclosure } from "@chakra-ui/react";
 import { useHeader } from "./context/headerContext";
@@ -42,8 +44,10 @@ import {
   ModalFooter,
   ModalCloseButton,
 } from "@chakra-ui/react";
+import { Icon } from "lucide-react";
 
 function App() {
+  const [stateToast, setStateToast] = useState(false)
   const [value, setValueOption] = useState<string>("2");
   const [flippedCards, setFlippedCards] = useState<object>({});
   const [init, setInit] = useState<boolean>(false);
@@ -64,6 +68,13 @@ function App() {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
+  function handleToast() {
+    setStateToast(true)
+    // setTimeout(() => {
+    //   setStateToast(false)
+    // }, 2500)
+  }
+
   function handleCardClick(index: number) {
     if (gameOver) return;
 
@@ -79,7 +90,7 @@ function App() {
       setTimeout(() => {
         setModalCongratulations(false)
       }, 2000)
-      setQuantia((prevQuantia) => prevQuantia + 0.112);
+      setQuantia((prevQuantia: number) => prevQuantia + 0.112);
       setCurrentMultiplier((prevMultiplier) => prevMultiplier * 4.667);
       setNextMultiplier(currentMultiplier * 4.667);
     } else {
@@ -93,6 +104,7 @@ function App() {
       setGameOver(true);
     }
   }
+
 
   const handleCheckboxChange = (position: string) => {
     setSelectedPositions((prevSelectedPositions) => {
@@ -111,15 +123,20 @@ function App() {
     setInit(true);
     setQuantia(quantia);
   }
-  
-  function handleClickPix(e) {
+
+  function handleClickPix(e: { preventDefault: () => void; }) {
     e.preventDefault();
-    setTimeout(() => {
-      setModalSacar(!modalSacar);
-    }, 1000);
+    setModalSacar(!modalSacar);
+    setModalRetidada(!modalRetidada)
   }
-  
-  function switchSacar(e) {
+
+  function handleVoltar(e: { preventDefault: () => void; }) {
+    e.preventDefault()
+    setModalRetidada(!modalRetidada)
+    setModalSacar(!modalSacar);
+  }
+
+  function switchSacar(e: { preventDefault: () => void; }) {
     e.preventDefault()
     setModalRetidada(!modalRetidada)
   }
@@ -132,12 +149,19 @@ function App() {
     }, 2000);
   }
 
+
+  function handleSwitchToast () {
+    setStateToast(!stateToast)
+  }
+
+
   const renderCards = () => {
     return Array.from({ length: 25 }, (_, index) => {
       const isDiamond = selectedPositions.includes(`pos${index + 1}`);
       const isFlipped = flippedCards[index];
 
       return (
+
         <CardWrapper key={index}>
           <Card
             className={isFlipped ? "flipped" : ""}
@@ -168,7 +192,7 @@ function App() {
 
   return (
     <>
-      <Header switchSacar={switchSacar}/>
+      <Header switchSacar={switchSacar} />
       <Main>
         <ContentFirst>
           <Left>
@@ -341,6 +365,7 @@ function App() {
           <hr className="hr_feast" />
 
           <Right>
+
             {modalCongratulations && (
               <ModalStyle>
                 <div>
@@ -358,7 +383,12 @@ function App() {
                   <p>Tipo De Retirada</p>
                   <Section />
                   <p>Detalhes Da Retirada</p>
-                  <button type="button" onClick={() => setModalRetidada(!modalRetidada)}>
+                  {/* <button type="button" onClick={() => setModalRetidada(!modalRetidada)}>
+                    <IoIosClose className="CloseIcon" />
+                  </button> */}
+                  <button type="button" onClick={() => {
+                    setModalRetidada(!modalRetidada)
+                  }}>
                     <IoIosClose className="CloseIcon" />
                   </button>
                 </div>
@@ -368,53 +398,52 @@ function App() {
                   {/* biome-ignore lint/a11y/noLabelWithoutControl: <explanation> */}
                   <label className="label_recomendado">
                     <button
-                     type="button"
-                     className="button_pix"
-                     onClick={handleClickPix
-                    }
+                      type="button"
+                      className="button_pix"
+                      onClick={handleClickPix}
                     >
                       Pix 2
-                    <img
-                      src={"https://blaze.com/static/media/pix.a89a8cc5.svg"}
-                      alt=""
-                      style={{ width: "1rem", marginRight: "1.5rem" }}
-                    />
+                      <img
+                        src={"https://blaze.com/static/media/pix.a89a8cc5.svg"}
+                        alt=""
+                        style={{ width: "1rem", marginRight: "1.5rem" }}
+                      />
                     </button>
                   </label>
-                  <p className="text-recomendado" style={{ marginTop: ".3rem", marginBottom: ".1rem"}}>Outros métodos</p>
+                  <p className="text-recomendado" style={{ marginTop: ".3rem", marginBottom: ".1rem" }}>Outros métodos</p>
                   {/* biome-ignore lint/a11y/noLabelWithoutControl: <explanation> */}
                   <label className="label_outrosmetodos">
                     <button type="button" className="button_pix">
                       Pix
-                    <img
-                      src={"https://blaze.com/static/media/pix.a89a8cc5.svg"}
-                      alt=""
-                      style={{ width: "1rem", marginRight: "1.5rem" }}
-                    />
+                      <img
+                        src={"https://blaze.com/static/media/pix.a89a8cc5.svg"}
+                        alt=""
+                        style={{ width: "1rem", marginRight: "1.5rem" }}
+                      />
                     </button>
                     <button type="button" className="button_pix">
                       Pix
-                    <img
-                      src={"https://blaze.com/static/media/pix.a89a8cc5.svg"}
-                      alt=""
-                      style={{ width: "1rem", marginRight: "1.5rem" }}
-                    />
+                      <img
+                        src={"https://blaze.com/static/media/pix.a89a8cc5.svg"}
+                        alt=""
+                        style={{ width: "1rem", marginRight: "1.5rem" }}
+                      />
                     </button>
                     <button type="button" className="button_pix">
                       Pix
-                    <img
-                      src={"https://blaze.com/static/media/pix.a89a8cc5.svg"}
-                      alt=""
-                      style={{ width: "1rem", marginRight: "1.5rem" }}
-                    />
+                      <img
+                        src={"https://blaze.com/static/media/pix.a89a8cc5.svg"}
+                        alt=""
+                        style={{ width: "1rem", marginRight: "1.5rem" }}
+                      />
                     </button>
                     <button type="button" className="button_pix">
                       Pix
-                    <img
-                      src={"https://blaze.com/static/media/pix.a89a8cc5.svg"}
-                      alt=""
-                      style={{ width: "1rem", marginRight: "1.5rem" }}
-                    />
+                      <img
+                        src={"https://blaze.com/static/media/pix.a89a8cc5.svg"}
+                        alt=""
+                        style={{ width: "1rem", marginRight: "1.5rem" }}
+                      />
                     </button>
                     <button type="button" className="button_pix">
                       Vpag
@@ -430,17 +459,20 @@ function App() {
                   <p>Tipo De Retirada</p>
                   <Section />
                   <p>Detalhes Da Retirada</p>
+                  <button type="button" onClick={() => setModalSacar(!modalSacar)}>
+                    <IoIosClose className="CloseIcon" />
+                  </button>
                 </div>
-                <h2 style={{ fontFamily: "sans-serif", textAlign: "center" }}>Insira as informações de Pix</h2>
-                <p style={{ marginBottom: ".5rem" }}>Antes de fazer um saque Pix, certifique-se de ter registrado seu CPF
+                <h2 style={{ fontFamily: "Roboto", fontSize: "16px", textAlign: "center" }}>Insira as informações de Pix</h2>
+                <p style={{ marginBottom: ".5rem", fontFamily: "Roboto", fontSize: "13px" }}>Antes de fazer um saque Pix, certifique-se de ter registrado seu CPF
                   como chave Pix no seu aplicativo bancário.
                 </p>
-                <p>1.Abra o aplicativo bancário</p>
-                <p>2.Vá para a seção Pix do aplicativo bancário</p>
-                <p>3.Selecione "Minhas Chaves"</p>
-                <p>4.Selecione a opção "Registrar Chave", e registre seu CPF</p>
-                <p style={{ marginBottom: ".5rem" }}>5.Assim que seu banco confirmar que a chave está<br />registrada, você poderá receber saques via Pix</p>
-                <h3 style={{ marginBottom: ".5rem" }}>Para uma guia mais detalhada sobre como registrar uma chave Pix, clique aqui.</h3>
+                <p style={{ fontSize: "13px" }}>1.Abra o aplicativo bancário</p>
+                <p style={{ fontSize: "13px" }}>2.Vá para a seção Pix do aplicativo bancário</p>
+                <p style={{ fontSize: "13px" }}>3.Selecione "Minhas Chaves"</p>
+                <p style={{ fontSize: "13px" }}>4.Selecione a opção "Registrar Chave", e registre seu CPF</p>
+                <p style={{ marginBottom: ".5rem", fontSize: "13px" }}>5.Assim que seu banco confirmar que a chave está<br />registrada, você poderá receber saques via Pix</p>
+                <h3 style={{ marginBottom: ".5rem", fontSize: "13px" }}>Para uma guia mais detalhada sobre como registrar uma chave Pix, clique aqui.</h3>
                 <Form>
                   <label className="firstLabel">
                     <input type="text" placeholder="CPF" />
@@ -456,23 +488,27 @@ function App() {
                     </label>
                   </section>
                   <div className="flex flex-col">
-                    <p>SALDO DIPONIVEL: R$0.00</p>
+                    <p style={{ fontSize: "13px" }}>SALDO DIPONIVEL: R$0.00</p>
                     <label className="label_saldo" style={{ marginTop: ".1875rem" }}>
                       <input type="text" placeholder="Quantia (BRL)" />
                     </label>
                   </div>
                   {/* <ModalCloseButton /> */}
                   <section id="section_button">
-                    <button type="button" id="button_voltar">Voltar</button>
+                    <button type="button" id="button_voltar" onClick={handleVoltar}>Voltar</button>
                     <button type="button" id="button_sacar">SACAR</button>
                   </section>
                 </Form>
               </ModalStyleSacar>
             )}
-            <div>{renderCards()}</div>
+            <div>
+              {renderCards()}
+            </div>
           </Right>
         </ContentFirst>
       </Main>
+
+      {stateToast && <Toast handleSwitchToast={handleSwitchToast}/>}
 
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />

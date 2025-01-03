@@ -1,5 +1,5 @@
 import { SetStateAction, useState, useRef } from "react";
-import { HeaderStyle, SelectStyled, ButtonsPay } from "./style.ts";
+import { HeaderStyle, SelectStyled, ButtonsPay, Level } from "./style.ts";
 import { BiSolidUser } from "react-icons/bi";
 import menu from "../../assets/menu.png";
 import logoBlaze from "../../assets/logoBlaze.png";
@@ -21,6 +21,8 @@ import SuporteIcon from '../../assets/suporteIcon.svg'
 import RecompensasIcon from '../../assets/reconpensasIcon.svg'
 import SairIcon from '../../assets/sairIcon.svg'
 import UserIcon from '../../assets/usericon.svg'
+import SetaIcon from '../../assets/Symbol.png'
+import CoroaIcon from '../../assets/bronze.160e3393.svg.png'
 import { Menu, MenuButton, MenuList, MenuItem, IconButton, Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Box, Img, useDisclosure, ModalCloseButton, background } from "@chakra-ui/react";
 import { AddIcon, ExternalLinkIcon, RepeatIcon, EditIcon } from "@chakra-ui/icons";
 import { useHeader } from "../../context/headerContext"
@@ -80,9 +82,23 @@ export function Header({ onQuantiaChange , switchSacar }: { onQuantiaChange: (va
           </section>
 
           <section className="flex items-center gap-[2rem]">
-            <div>
-              <img src={LevelIcon} alt="" className="cursor-pointer" />
-            </div>
+            <Level>
+              <div style={{ display: "flex", 
+                alignItems: "center", justifyContent: "center",
+                gap: ".5rem"
+                }}>
+               <img 
+                src={CoroaIcon}
+                className="cursor-pointer"
+                alt=""
+                style={{ width: "15px", height: "15px"}}
+               />
+               <p style={{ color: "#C5A075" }}>Bronze</p>
+               <p style={{ color: "#fff", fontFamily: "Roboto", fontSize: "14px", marginTop: "3px" }}>Nível29</p>
+              </div>
+              <div style={{ width: "80px", height: "2px", background: "#353e4c" }}/>
+              <div style={{ position: "absolute", background: "#C5A075", margin }}/>
+            </Level>
             <div className="flex items-center">
               <img src={NotificationIcon} alt="" className="message_icon" />
               <img src={NotifyIcon} alt="" className="notify_icon" />
@@ -137,13 +153,14 @@ export function Header({ onQuantiaChange , switchSacar }: { onQuantiaChange: (va
                 </MenuList>
               </Menu>
 
-              <label>
+              <label className="label_quantia">
                 <input
                   type="text"
                   // value={formatValue(initialQuantia)}
                   onChange={(e) => setQuantia(e.target.value)}
                   className="value_input"
                 />
+                <img src={SetaIcon} alt="" />
               </label>
             </div>
             <button type="button" className="button_deposito">Depositar</button>

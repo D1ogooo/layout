@@ -8,6 +8,17 @@ export const HeaderStyle = styled.header`
   z-index: 1000;
   background-color: #0F1923; 
   
+  .label_quantia {
+    display: flex;
+    
+    img {
+     position: absolute;
+     width: 5px;
+     height: 5px;
+     margin-left: 80px;
+     margin-top: 13px;
+    }
+  }
 
   .message_icon {
     cursor: pointer;
@@ -129,3 +140,8 @@ export const SelectStyled = styled.select`
     border-color: #555;
   }
 `;
+
+export const Level = styled.div`
+ display: flex;
+ flex-direction: column;
+`
